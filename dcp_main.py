@@ -586,7 +586,7 @@ class cxOrderMain():
         #이곳에서 시세 변경에 대한 감시 등의 로직 추가 고려
         return
 
-    def monitorOrderStatus(self, coe, ordernum, conflags, price, amount, balance):
+    def monitorOrderStatus(self, code, ordernum, conflags, price, amount, balance):
         print('주문 체결:', code, ordernum, conflags, price, amount, balance)
         if self.orderStatus == orderStatus.nothing:
             return
@@ -678,7 +678,8 @@ class cxDcpMainWindow(QDialog, form_class):
 
     def queueTime(self):
         #print('timeout')
-        print('timeout', time.strftime("%H:%M:%S"))
+        #print('timeout', time.strftime("%H:%M:%S"))
+        pass
 
     def btnZango_clicked(self):
         data_list = []
