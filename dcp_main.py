@@ -218,7 +218,7 @@ class CpEvent:
  
     # PLUS 로 부터 실제로 시세를 수신 받는 이벤트 핸들러 
     def OnReceived(self):
-        print(self.name)
+        #print(self.name)
         if self.name == "stockcur" :
             # 현재가 체결 데이터 실시간 업데이트
             exFlag = self.client.GetHeaderValue(19)  # 예상체결 플래그
@@ -229,7 +229,9 @@ class CpEvent:
  
             # 현재가 업데이트
             self.parent.sprice.cur = cprice
+            """
             print("PB > 현재가 업데이트 : ", cprice)
+            """
  
             # 현재가 변경  call back 함수 호출
             self.parent.monitorPriceChange()
@@ -244,18 +246,20 @@ class CpEvent:
                 self.parent.sprice.offer[i] = self.client.GetHeaderValue(dataindex[obi])
                 self.parent.sprice.bid[i] = self.client.GetHeaderValue(dataindex[obi + 1])
                 obi += 2
- 
+            """
             # for debug
             for i in range(10):
                 print("PB > 10차 호가 : ",i + 1, "차 매도/매수 호가: ", self.parent.sprice.offer[i], self.parent.sprice.bid[i])
+            """
             return True
- 
+
             # 10차 호가 변경 call back 함수 호출
             self.parent.monitorPriceChange()
  
             return
  
         elif self.name == "conclusion" :
+            print(self.name)
             # 주문 체결 실시간 업데이트
             conflag = self.client.GetHeaderValue(14)    # 체결 플래그
             ordernum = self.client.GetHeaderValue(5)    # 주문번호
@@ -487,7 +491,7 @@ class cxOrderMain():
 
     def BuyOrder(self):
         self.stopSubscribe()
-        self.code = 'A003540'   #테스트용 종목 코드
+        self.code = 'A003540'   #테스트용 종목 코드 : 대신증권
         self.buyamount = 1      #주문 수량
         
         #1 현재가 구하기
@@ -587,7 +591,7 @@ class cxOrderMain():
         return
 
     def monitorOrderStatus(self, code, ordernum, conflags, price, amount, balance):
-        print('주문 체결:', code, ordernum, conflags, price, amount, balance)
+        print('주문:', code, ordernum, conflags, price, amount, balance)
         if self.orderStatus == orderStatus.nothing:
             return
         #체결: 체결시 체결 수량/미체결 수량 게산
